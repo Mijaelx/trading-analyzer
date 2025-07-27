@@ -1,0 +1,11 @@
+name = "trading-analyzer"
+main = "src/index.js"
+compatibility_date = "2023-12-01"
+
+[vars]
+ENVIRONMENT = "production"
+
+[[kv_namespaces]]
+binding = "TRADING_DATA"
+id = "348696cadfb140caad309408734878be"
+preview_id = "147cdae6fc2048d58a164dc1772ffac2"

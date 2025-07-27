@@ -1,0 +1,41 @@
+{
+  "functions": {
+    "api/upload.js": {
+      "runtime": "@vercel/node"
+    },
+    "api/process.js": {
+      "runtime": "@vercel/node"
+    },
+    "api/dashboard.js": {
+      "runtime": "@vercel/node"
+    },
+    "api/review.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ]
+}
