@@ -1,4 +1,3 @@
-// Vercel API函数 - 处理数据处理
 export default async function handler(req, res) {
   // 设置CORS头
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -16,24 +15,15 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 转发到Cloudflare Workers
-    const workerUrl = 'https://trading-analyzer.qfz4kq6xmr.workers.dev/api/process';
-    
-    const response = await fetch(workerUrl, {
-      method: 'POST',
-      body: JSON.stringify(req.body),
-      headers: {
-        'Content-Type': 'application/json',
-      }
+    // 模拟数据处理成功
+    res.status(200).json({
+      success: true,
+      message: '数据处理完成（测试模式）'
     });
-
-    const data = await response.json();
-    
-    res.status(response.status).json(data);
   } catch (error) {
-    console.error('处理代理错误:', error);
+    console.error('处理错误:', error);
     res.status(500).json({ 
-      error: '代理请求失败: ' + error.message 
+      error: '处理失败: ' + error.message 
     });
   }
 }

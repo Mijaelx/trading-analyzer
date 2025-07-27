@@ -1,18 +1,4 @@
 {
-  "functions": {
-    "api/upload.js": {
-      "runtime": "@vercel/node"
-    },
-    "api/process.js": {
-      "runtime": "@vercel/node"
-    },
-    "api/dashboard.js": {
-      "runtime": "@vercel/node"
-    },
-    "api/review.js": {
-      "runtime": "@vercel/node"
-    }
-  },
   "rewrites": [
     {
       "source": "/api/(.*)",

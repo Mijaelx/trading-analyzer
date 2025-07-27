@@ -1,6 +1,3 @@
-// Vercel API函数 - 处理文件上传
-import formidable from 'formidable';
-
 export default async function handler(req, res) {
   // 设置CORS头
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,31 +15,16 @@ export default async function handler(req, res) {
   }
 
   try {
-    // 转发到Cloudflare Workers
-    const workerUrl = 'https://trading-analyzer.qfz4kq6xmr.workers.dev/api/upload';
-    
-    // 获取原始请求体
-    const chunks = [];
-    for await (const chunk of req) {
-      chunks.push(chunk);
-    }
-    const body = Buffer.concat(chunks);
-
-    const response = await fetch(workerUrl, {
-      method: 'POST',
-      body: body,
-      headers: {
-        'Content-Type': req.headers['content-type'],
-      }
+    // 简单的测试响应，先不转发到Workers
+    res.status(200).json({
+      success: true,
+      fileId: 'test-' + Date.now(),
+      message: '文件上传成功（测试模式）'
     });
-
-    const data = await response.json();
-    
-    res.status(response.status).json(data);
   } catch (error) {
-    console.error('上传代理错误:', error);
+    console.error('上传错误:', error);
     res.status(500).json({ 
-      error: '代理请求失败: ' + error.message 
+      error: '上传失败: ' + error.message 
     });
   }
 }

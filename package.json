@@ -8,12 +8,6 @@
     "build": "echo 'Build complete'",
     "start": "vercel dev"
   },
-  "dependencies": {
-    "formidable": "^3.5.1"
-  },
-  "devDependencies": {
-    "@vercel/node": "^3.0.0"
-  },
   "keywords": [
     "trading",
     "analysis",
