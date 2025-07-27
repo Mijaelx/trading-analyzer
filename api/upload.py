@@ -1,63 +1,38 @@
 from flask import Flask, request, jsonify
-import sys
-import os
 from datetime import datetime
-
-# 添加项目根目录到Python路径
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 app = Flask(__name__)
 
-@app.route('/api/upload', methods=['POST', 'OPTIONS'])
-def upload_file():
-    """处理文件上传"""
-    
-    # 处理CORS预检请求
+def handler(request):
+    """Vercel函数入口点"""
     if request.method == 'OPTIONS':
-        response = jsonify({'status': 'ok'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        return response
+        return jsonify({'status': 'ok'}), 200, {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+            'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,OPTIONS'
+        }
+    
+    if request.method != 'POST':
+        return jsonify({'error': '只支持POST请求'}), 405, {
+            'Access-Control-Allow-Origin': '*'
+        }
     
     try:
-        if 'file' not in request.files:
-            return jsonify({'error': '没有选择文件'}), 400
+        # 模拟文件上传成功
+        file_id = f"upload_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
-        file = request.files['file']
-        if file.filename == '':
-            return jsonify({'error': '没有选择文件'}), 400
+        response_data = {
+            'success': True,
+            'fileId': file_id,
+            'message': '文件上传成功（演示模式）',
+            'timestamp': datetime.now().isoformat()
+        }
         
-        if file and file.filename.endswith('.xlsx'):
-            # 生成文件ID
-            file_id = f"upload_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-            
-            # 在实际项目中，这里会保存文件并处理
-            # 现在返回成功响应
-            response = jsonify({
-                'success': True,
-                'fileId': file_id,
-                'message': '文件上传成功',
-                'filename': file.filename,
-                'size': len(file.read())
-            })
-            
-            # 添加CORS头
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response
-        else:
-            response = jsonify({'error': '请上传Excel文件(.xlsx)'})
-            response.headers.add('Access-Control-Allow-Origin', '*')
-            return response, 400
-            
+        return jsonify(response_data), 200, {
+            'Access-Control-Allow-Origin': '*'
+        }
+        
     except Exception as e:
-        response = jsonify({'error': f'文件处理失败: {str(e)}'})
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response, 500
-
-# Vercel需要这个函数作为入口点
-def handler(request):
-    return app(request.environ, lambda status, headers: None)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        return jsonify({'error': f'上传失败: {str(e)}'}), 500, {
+            'Access-Control-Allow-Origin': '*'
+        }

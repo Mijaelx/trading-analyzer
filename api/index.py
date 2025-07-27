@@ -1,29 +1,7 @@
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, request, jsonify
 import sys
 import os
 from datetime import datetime
-
-# 添加项目根目录到Python路径
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-try:
-    from core.trading_processor import TradingProcessor
-    from core.trading_review import TradingReview
-except ImportError:
-    # 如果导入失败，创建模拟类
-    class TradingProcessor:
-        def __init__(self):
-            pass
-        def load_data(self, file_path):
-            return True
-        def calculate_fees(self):
-            return True
-        def calculate_pnl(self):
-            return True
-    
-    class TradingReview:
-        def __init__(self, processor=None):
-            pass
 
 app = Flask(__name__)
 
