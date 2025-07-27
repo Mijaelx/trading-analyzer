@@ -89,6 +89,9 @@ def index():
                         <p class="lead">专业的股票交易数据处理和分析工具，帮助你深入了解交易表现，优化投资策略。</p>
                         <hr class="my-4">
                         <p>支持交易费用计算、盈亏分析、持仓管理、分红记录和交易复盘等功能。</p>
+                        <div class="alert alert-info">
+                            <small><i class="bi bi-info-circle"></i> 系统已更新 - 版本 v1.1.0</small>
+                        </div>
                     </div>
                 </div>
             </div>
